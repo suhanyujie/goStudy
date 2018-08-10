@@ -20,5 +20,8 @@
 
 
 ## 参考资料
-* https://baijiahao.baidu.com/s?id=1577200621749785094&wfr=spider&for=pc
+* 主要原理和流程
+> https://baijiahao.baidu.com/s?id=1577200621749785094&wfr=spider&for=pc
+https://blog.csdn.net/followmyinclinations/article/details/50426413
+
 * 平衡因子的计算 https://blog.csdn.net/travelerwz/article/details/52186357 （有点小错误）

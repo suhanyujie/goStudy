@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {{template "T.header.tpl"}}
+  <title> 登录 </title>
+  
+</head>
+<body>
+  {{template "T.navbar.tpl" .}}
+  <div class="container ">
+    <h2>修改文章</h2>
+    <form action="/topic" method="post">
+    	<div class="form-group">
+    		<label>文章标题</label>
+    		<input type="text" name="title" value="{{.Topic.Title}}" class="form-control">
+    		<input type="hidden" name="tid" value="{{.Topic.Id}}">
+    	</div>
+    	<div class="form-group">
+    		<label>文章内容</label>
+    		<textarea type="text" name="content" cols="30" rows="10" class="form-control">{{.Topic.Content}}</textarea>
+    	</div>
+    	<button type="submit" class="btn btn-default">保存</button>
+    </form>
+
+  </div>  
+</body>
+</html>

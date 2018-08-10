@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{{template "T.header.tpl"}}
+	<title>Home-我的博客</title>
+</head>
+<body>
+{{template "T.navbar.tpl" .}}
+
+<div class="container">
+	{{range .Topics}}
+		<div class="jumbotron">
+		  <h1>{{.Title}}</h1>
+		  <p>...{{.IsIndex}}</p>
+		  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+		</div>
+	{{end}}
+</div>
+
+
+</body>
+</html>

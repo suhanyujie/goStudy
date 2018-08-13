@@ -1,5 +1,9 @@
 package binarySearchTree
 
+/**
+@desc 参考自己的c代码逻辑  https://github.com/suhanyujie/DataStructure/blob/master/BSTree/BSTree.c
+ */
+
 type TreeNode struct {
 	Data  interface{}
 	Left  *TreeNode

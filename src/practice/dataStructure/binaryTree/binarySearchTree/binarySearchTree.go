@@ -1,13 +1,14 @@
 package binarySearchTree
 
 type TreeNode struct {
-	Data interface{}
-	Left *TreeNode
+	Data  interface{}
+	Left  *TreeNode
 	Right *TreeNode
+	Parent *TreeNode
 }
 
 type SearchTree struct {
-	Root *TreeNode
+	Root   *TreeNode
 	Length int
 }
 
@@ -17,24 +18,27 @@ func (_this *SearchTree) InsertNode(value int) {
 		value,
 		nil,
 		_this.Root,
+		nil,
 	}
-	compareNode := _this.Root
-	for true {
-		dataValue := compareNode.Data.(int)
+	currentNode := _this.Root
+	var lastNode *TreeNode
+	var dataValue int;
+	for currentNode != nil {
+		dataValue = currentNode.Data.(int)
+		lastNode = currentNode
 		if value < dataValue {
-			if compareNode.Left == nil {
-				compareNode.Left = newNode
-				break;
-			}
-			compareNode = compareNode.Left
-		}else{
-			if compareNode.Right == nil {
-				compareNode.Right = newNode
-				break;
-			}
-			compareNode = compareNode.Right
+			currentNode = currentNode.Left
+		} else {
+			currentNode = currentNode.Right
 		}
 	}
+	newNode.Parent = lastNode
+	if value < dataValue {
+		lastNode.Left = newNode
+	} else {
+		lastNode.Right = newNode
+	}
+
 }
 
 func GetInitBst() *SearchTree {
@@ -48,14 +52,13 @@ func GetInitBst() *SearchTree {
 }
 
 // todo 获取一个根节点
-func GetRoot () *TreeNode {
+func GetRoot() *TreeNode {
 	Bst := &TreeNode{
 		0,
+		nil,
 		nil,
 		nil,
 	}
 
 	return Bst
 }
-
-

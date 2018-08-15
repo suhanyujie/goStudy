@@ -32,7 +32,7 @@ func (_this *SearchTree) InsertNode(value int) {
 	newNode := &TreeNode{
 		value,
 		nil,
-		_this.Root,
+		nil,
 		nil,
 	}
 	var currentNode *TreeNode = _this.Root

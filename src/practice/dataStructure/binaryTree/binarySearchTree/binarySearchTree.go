@@ -68,6 +68,28 @@ func (_this *SearchTree) BeforeTraverse(beginNode *TreeNode) {
 	_this.BeforeTraverse(beginNode.Right)
 }
 
+// todo 中序遍历
+func (_this *SearchTree) MiddleTraverse(beginNode *TreeNode)  {
+	if beginNode == nil {
+		return;
+	}
+	_this.MiddleTraverse(beginNode.Left)
+	value := beginNode.Data.(int)
+	fmt.Printf("%d\t", value);
+	_this.MiddleTraverse(beginNode.Right)
+}
+
+// todo 后序遍历
+func (_this *SearchTree) AfterTraverse(beginNode *TreeNode)  {
+	if beginNode == nil {
+		return;
+	}
+	_this.AfterTraverse(beginNode.Right)
+	_this.AfterTraverse(beginNode.Left)
+	value := beginNode.Data.(int)
+	fmt.Printf("%d\t", value);
+}
+
 func GetInitBst() *SearchTree {
 	Root := GetRoot()
 	Tree := &SearchTree{

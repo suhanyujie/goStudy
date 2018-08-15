@@ -11,5 +11,8 @@ func main() {
 	//for i := 12; i < 15; i++ {
 	//	bst.InsertNode(i)
 	//}
-	bst.BeforeTraverse(bst.Root)
+	//bst.BeforeTraverse(bst.Root)
+	//bst.AfterTraverse(bst.Root)
+	bst.MiddleTraverse(bst.Root)
 }
+

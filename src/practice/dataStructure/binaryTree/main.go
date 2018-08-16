@@ -2,17 +2,18 @@ package main
 
 import (
 	"practice/dataStructure/binaryTree/binarySearchTree"
+	"fmt"
 )
 
 // 入口函数
 func main() {
 	bst := binarySearchTree.GetInitBst()
-	bst.InsertNode(12)
-	//for i := 12; i < 15; i++ {
-	//	bst.InsertNode(i)
-	//}
+	for i := 12; i < 321; i++ {
+		bst.InsertNode(i)
+	}
 	//bst.BeforeTraverse(bst.Root)
-	//bst.AfterTraverse(bst.Root)
+	bst.AfterTraverse(bst.Root)
+	fmt.Println("------------------")
 	bst.MiddleTraverse(bst.Root)
 }
 

@@ -13,6 +13,41 @@ import (
 	"io/ioutil"
 )
 
+var BaseUrl string;
+
+type FictionOneOfList struct {
+	title string
+	url   string
+}
+
+/**
+获取小说列表页
+ */
+func GetList(url string) (status interface{}, returnVarerror error) {
+	result, err := GetHttpResponse(url)
+	if err != nil {
+		return 30019, err
+	}
+	//解析html内容
+	dom, err := goquery.NewDocumentFromReader(bytes.NewReader(result))
+	if err != nil {
+		return 30024, err
+	}
+	var detailContent []FictionOneOfList
+	dom.Find("#list dl dd a").Each(func(i int, s *goquery.Selection) {
+		title := s.Text()
+		url, _ := s.Attr("href")
+		oneList := FictionOneOfList{
+			title,
+			BaseUrl + "/" + url,
+		}
+		detailContent = append(detailContent, oneList)
+	});
+	fmt.Println(detailContent)
+
+	return nil, errors.New("任务完成")
+}
+
 /**
 @desc 获取小说的详情
  */
@@ -40,6 +75,13 @@ func GetDetail(url string) (status interface{}, returnErr error) {
 	}
 
 	return nil, errors.New("任务完成...")
+}
+
+/**
+获取url公共的前缀部分
+ */
+func GetBaseUrl(baseUrl string) {
+	BaseUrl = baseUrl
 }
 
 /**

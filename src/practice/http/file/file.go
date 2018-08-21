@@ -1,6 +1,9 @@
 package file
 
-import "os"
+import (
+	"os"
+	"errors"
+)
 
 /**
 我们通常会用到以下标志：
@@ -14,11 +17,10 @@ os.O_TRUNC：截断：如果指定文件已存在，就将该文件的长度截�
 http://wiki.jikexueyuan.com/project/the-way-to-go/12.2.html
  */
 func SsWriteFile(filename string, data []byte) error {
-	filePointer, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE, 0666)
+	filePointer, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
-		return err
+		return errors.New(err.Error()+"---[30022]")
 	}
-	defer filePointer.Close()
 	_, err = filePointer.Write(data)
 	if err != nil {
 		return err

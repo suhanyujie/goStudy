@@ -1,14 +1,50 @@
 package testSpider
 
 import (
-	"net/http"
+	"github.com/PuerkitoBio/goquery"
+	"bytes"
+	"os"
+	"practice/http/file"
 	"errors"
+	"net/http"
 	"fmt"
 	"golang.org/x/text/transform"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"io/ioutil"
 )
 
+/**
+@desc 获取小说的详情
+ */
+func GetDetail(url string) (status interface{}, returnErr error) {
+	result, err := GetHttpResponse(url)
+	if err != nil {
+		return 30021, err
+	}
+	//解析html内容
+	dom, err := goquery.NewDocumentFromReader(bytes.NewReader(result))
+	if err != nil {
+		return 30026, err
+	}
+	var detailContent string
+	dom.Find(".box_con #content").Each(func(i int, s *goquery.Selection) {
+		detailContent = s.Text()
+	});
+	dir, _ := os.Getwd()
+	newFileName := dir + "/src/practice/http/testSpider/cache/fiction.inc"
+	//将内容写入文件中
+	fileContent := []byte(detailContent)
+	err = file.SsWriteFile(newFileName, fileContent)
+	if err != nil {
+		return 30036, err
+	}
+
+	return nil, errors.New("任务完成...")
+}
+
+/**
+根据url请求对应的详细并返回
+ */
 func GetHttpResponse(url string) ([]byte, error) {
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {

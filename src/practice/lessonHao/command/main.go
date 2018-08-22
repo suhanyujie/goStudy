@@ -21,6 +21,9 @@ var cmdLine = flag.NewFlagSet("question", flag.ExitOnError)
 func main() {
 	var name string;
 
+
+	lib.ShowLib()
+
 	//flag.Usage = func() {
 	//	fmt.Fprintf(os.Stderr,"Usage of %s:\n", "'cmd Greeeting'")
 	//	flag.PrintDefaults()
@@ -32,5 +35,4 @@ func main() {
 
 
 	fmt.Printf("hello,%s!\n", name);
-	lib.ShowLib()
 }

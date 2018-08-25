@@ -21,7 +21,6 @@ var cmdLine = flag.NewFlagSet("question", flag.ExitOnError)
 func main() {
 	var name string;
 
-
 	lib.ShowLib()
 
 	//flag.Usage = func() {

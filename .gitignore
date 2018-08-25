@@ -3,6 +3,11 @@
 /bin
 /pkg
 /projectFilesBackup
+/src/github.com
 /src/github.com/Unknwon
 /src/github.com/user
 
+/src/github.com/jinzhu/gorm
+/src/github.com/jinzhu/inflection
+/src/github.com/PuerkitoBio/goquery
+/src/github.com/kardianos/govendor

@@ -17,6 +17,6 @@ import (
 // 入口函数
 func main() {
 	//channelFirst.Test1()
-	goroutine.TestGoroutine2()
-	time.Sleep(time.Second*2)
+	goroutine.TestGoroutine3()
+	time.Sleep(1e9)
 }

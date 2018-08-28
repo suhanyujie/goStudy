@@ -2,7 +2,41 @@ package goroutine
 
 import (
 	"fmt"
+	"math"
 )
+
+//TestGoroutine5
+func TestGoroutine5(n int) {
+	ch1 := make(chan float64)
+	for k := 0; k < n; k++ {
+		go term(ch1, float64(k))
+	}
+	sum := 0.0
+	for k := 0; k < n; k++ {
+		sum += <-ch1
+	}
+	fmt.Println(sum);
+}
+
+func term(ch1 chan float64, k float64) {
+	ch1 <- 4 * ((math.Pow(-1, k)) / (2*k + 1))
+}
+
+//TestGoroutine4 提供无限的随机 0 或者 1 的序列
+func TestGoroutine4() {
+	c1 := make(chan int)
+	go func() {
+		for {
+			fmt.Printf("%d\t", <-c1)
+		}
+	}()
+	for {
+		select {
+		case c1 <- 0:
+		case c1 <- 1:
+		}
+	}
+}
 
 // TestGoroutine3
 func TestGoroutine3() {

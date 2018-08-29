@@ -1,8 +1,8 @@
 package main
 
 import (
-	"lesson/lesson10-select/channel/goroutine"
 	"time"
+	"lesson/lesson10-select/channel/tick"
 )
 
 /**
@@ -19,6 +19,8 @@ func main() {
 	//channelFirst.Test1()
 	//goroutine.TestGoroutine3()
 	//goroutine.TestGoroutine4()
-	goroutine.TestGoroutine5(1000)
+	//goroutine.TestGoroutine5(1000)
+	tick.TestTick2()
+	//tick.TestTick1()
 	time.Sleep(1e9)
 }

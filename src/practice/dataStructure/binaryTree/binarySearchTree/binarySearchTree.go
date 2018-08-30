@@ -112,6 +112,24 @@ func GetInitBst() *SearchTree {
 	return Tree
 }
 
+//todo 在树中搜索一个确定的值的节点
+func SearchNode(Tree *SearchTree, searchValue int) *TreeNode {
+	currentNode := Tree.Root
+	for currentNode !=nil {
+		currentValue := currentNode.Data.(int)
+		if searchValue==currentValue {
+			break;
+		}
+		if searchValue>currentValue {
+			currentNode = currentNode.Right
+		} else {
+			currentNode = currentNode.Left
+		}
+	}
+
+	return currentNode
+}
+
 // todo 获取一个根节点
 func GetRoot() *TreeNode {
 	Bst := &TreeNode{

@@ -1,13 +1,14 @@
 package avlBinaryTree
+
 /**
 平衡二叉树的实现
 	介绍+实现  https://www.cnblogs.com/skywang12345/p/3576969.html
+	一共有4种旋转操作
 
  */
 
-
 type TreeNode struct {
-	Type   int//关键字 键值
+	Type   int //关键字 键值
 	Data   interface{}
 	Left   *TreeNode
 	Right  *TreeNode
@@ -19,19 +20,20 @@ type AvlTree struct {
 	Length int
 }
 
-func LRotation(node *TreeNode) *TreeNode {
-	prchild := node.Right
-	node.Right = prchild.Left
-	prchild.Left = node
+func LLRotation(node *TreeNode) *TreeNode {
+	k1 := node.Left
+	node.Left = k1.Right
+	k1.Right = node;
+	node.Height = Max(node.Left.Height,node.Right.Height) + 1
+	k1.Height = Max(k1.Left.Height,node.Height) + 1
 
-	return prchild
+	return k1
 }
 
 func Max(a, b int) int {
-	if a>b {
+	if a > b {
 		return a
 	} else {
 		return b
 	}
 }
-

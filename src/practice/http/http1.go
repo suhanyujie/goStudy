@@ -6,9 +6,8 @@ import (
 
 // 入口函数
 func main() {
-
-
-	string2.Chinese2Int()
+	chapterName := "第二百三十六"
+	string2.Chinese2Int(chapterName)
 
 	/*
 	listUrl := "https://www.biduo.cc/biquge/17_17308"

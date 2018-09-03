@@ -12,10 +12,10 @@ import (
 	"os/exec"
 	"runtime"
 	"flag"
-	"strconv"
+	"github.com/json-iterator/go"
 )
 
-var OneFile map[string]string
+var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 //从url中获取文件名
 func getFileName(url string) string {
@@ -240,31 +240,33 @@ func main() {
 		case string(ctx.Path()) == "/downlist":
 			//生成文件列表
 			dirList, _ := ioutil.ReadDir("./download")
-			length := len(dirList)
+			//length := len(dirList)
+			var manyFile []map[string]string
+			var oneFile map[string]string
+			for _,file := range dirList{
 
-			//for _,file := range dirList{
-			//	oneFile := &OneFile{
-			//		file.Name(),
-			//		float32(file.Size()) / 1024 / 1024,
-			//	};
-			//	theFileList = append(theFileList, *oneFile)
-			//}
-			//jsonByteArr,err := json.Marshal(theFileList)
-			//if err!=nil {
-			//	log.Fatal(err)
-			//}
-			//jsonString := string(jsonByteArr[:]);
-			//fmt.Println(theFileList,jsonString)
-			//ctx.WriteString(jsonString)
-
-			ctx.WriteString("[")
-			for i := 0; i < length; i++ {
-				ctx.WriteString(`{"name":"` + dirList[i].Name() + `","mtime":"` + dirList[i].ModTime().Format("2006-01-02 15:04:05") + `","size":"` + strconv.FormatInt(dirList[i].Size() / 1024 / 1024, 10) + ` MB"}`)
-				if i != length - 1 {
-					ctx.WriteString(",")
+				oneFile = map[string]string{
+					"name":file.Name(),
+					"size":fmt.Sprintf("%.3fKB", float64(file.Size()) / 1024),
 				}
+				manyFile = append(manyFile, oneFile)
 			}
-			ctx.WriteString("]")
+			jsonByteArr,err := json.Marshal(manyFile)
+			if err!=nil {
+				log.Fatal(err)
+			}
+			jsonString := string(jsonByteArr[:]);
+			fmt.Println(manyFile,jsonString)
+			ctx.WriteString(jsonString)
+
+			//ctx.WriteString("[")
+			//for i := 0; i < length; i++ {
+			//	ctx.WriteString(`{"name":"` + dirList[i].Name() + `","mtime":"` + dirList[i].ModTime().Format("2006-01-02 15:04:05") + `","size":"` + strconv.FormatInt(dirList[i].Size() / 1024 / 1024, 10) + ` MB"}`)
+			//	if i != length - 1 {
+			//		ctx.WriteString(",")
+			//	}
+			//}
+			//ctx.WriteString("]")
 		default:
 			ctx.Error("not found", fasthttp.StatusNotFound)
 		}

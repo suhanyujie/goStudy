@@ -7,7 +7,7 @@ import (
 
 // 入口函数
 func main() {
-	chapterName := "第二百三十六"
+	chapterName := "第一千二百零六"
 	num := string2.Chinese2Int(chapterName)
 	fmt.Println(num)
 

@@ -33,6 +33,13 @@ var chNumMapValue = map[string]valueObj{
 	"亿": valueObj{100000000, true},
 }
 
+
+/**
+第二百三十六
+236
+
+
+ */
 func Chinese2Int(originStr string) int {
 	//在原字符串中，将中文数字转换为阿拉伯数字
 	var dealStr string;
@@ -43,11 +50,10 @@ func Chinese2Int(originStr string) int {
 		oneNum, isOk := chNumChar[val]
 		//中文转数字是否匹配上，没匹配上说明是单位或者其他文字
 		if isOk {
+			number = oneNum
 			//如果是最后一位，是各位，只需加上它
-			if (index - 1) == len(dealStrArr) {
+			if (index ) == (len(dealStrArr)-1) {
 				sectionNum += oneNum
-			} else {
-				number = oneNum
 			}
 		} else {
 			_,isOk := chNumMapValue[val]
@@ -57,12 +63,13 @@ func Chinese2Int(originStr string) int {
 			var unit = chNumMapValue[val].value
 			var secUnit = chNumMapValue[val].secUnit
 			if secUnit {
-				sectionNum = sectionNum + number*unit
+				sectionNum = (sectionNum + number)*unit
 				rtn += sectionNum
 				sectionNum = 0
 			} else {
 				sectionNum += number * unit
 			}
+			number = 0
 		}
 	}
 

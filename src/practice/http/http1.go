@@ -2,12 +2,14 @@ package main
 
 import (
 	string2 "practice/http/libs/string"
+	"fmt"
 )
 
 // 入口函数
 func main() {
 	chapterName := "第二百三十六"
-	string2.Chinese2Int(chapterName)
+	num := string2.Chinese2Int(chapterName)
+	fmt.Println(num)
 
 	/*
 	listUrl := "https://www.biduo.cc/biquge/17_17308"

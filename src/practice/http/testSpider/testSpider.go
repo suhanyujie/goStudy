@@ -59,6 +59,7 @@ func GetList(url string) (status interface{}, data []FictionOneOfList, returnVar
 			title,
 			BaseUrl + "/" + url,
 		}
+		
 		detailContent = append(detailContent, oneList)
 	});
 

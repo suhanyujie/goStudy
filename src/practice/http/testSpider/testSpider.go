@@ -11,6 +11,8 @@ import (
 	"golang.org/x/text/transform"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"io/ioutil"
+	"log"
+	"sync"
 )
 
 var BaseUrl string;
@@ -18,6 +20,22 @@ var BaseUrl string;
 type FictionOneOfList struct {
 	title string
 	url   string
+}
+
+/**
+处理任务数据
+ */
+func DealTask(ch1 chan FictionOneOfList,wg sync.WaitGroup) {
+	for {
+		select {
+		case oneTask := <-ch1:
+			fmt.Println(oneTask.title)
+			status, returnErr := GetDetail(oneTask.url)
+			if status!=nil {
+				log.Fatal(returnErr)
+			}
+		}
+	}
 }
 
 /**
@@ -64,6 +82,7 @@ func GetDetail(url string) (status interface{}, returnErr error) {
 	dom.Find(".box_con #content").Each(func(i int, s *goquery.Selection) {
 		detailContent = s.Text()
 	});
+	fmt.Println(detailContent)
 	dir, _ := os.Getwd()
 	newFileName := dir + "/src/practice/http/testSpider/cache/fiction.inc"
 	//将内容写入文件中

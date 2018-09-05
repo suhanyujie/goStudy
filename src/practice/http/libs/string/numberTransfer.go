@@ -35,10 +35,12 @@ var chNumMapValue = map[string]valueObj{
 
 
 /**
-第二百三十六
-236
+中文数字转阿拉伯数字
+第二百三十六->236
 
-
+1.先将字符串通过空字符串分隔开，成为数组，针对单个文字进行处理
+2.如果是数字，则转为数字
+3.如果是"数字位"，则将之前的数字乘以权重 与后续的section进行相加
  */
 func Chinese2Int(originStr string) int {
 	//在原字符串中，将中文数字转换为阿拉伯数字

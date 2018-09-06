@@ -7,14 +7,47 @@ import (
 	"log"
 	"lesson/gorm/beegoOrm/models"
 	"github.com/astaxie/beego"
+	string2 "practice/http/libs/string"
 )
 
 func init() {
 	beego.LoadAppConfig("ini", "src/lesson/gorm/beegoOrm/config/database.conf")
 	connectionStr := beego.AppConfig.String("connection1")
-	orm.RegisterDataBase("default", "mysql", connectionStr, 30)
+	err := orm.RegisterDataBase("bbs_test", "mysql", connectionStr, 30)
+	if err != nil {
+		log.Fatal(err)
+	}
 	orm.RegisterModel(new(models.NovelList), new(models.NovelContent), new(models.NovelMain))
-	//orm.RunSyncdb("default", false, true)
+	err = orm.RunSyncdb("bbs_test", false, true)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+type FictionOneOfList struct {
+	Title string
+	Url   string
+}
+
+/**
+插入列表数据
+ */
+func InsertList(OneTask FictionOneOfList)(int,string) {
+	chanpterNum := string2.Chinese2Int(OneTask.Title)
+	list := &models.NovelList{
+		NovelId:11,
+		Url:OneTask.Url,
+		Title:OneTask.Title,
+		Chapter:chanpterNum,
+	}
+	ormObject := orm.NewOrm()
+	id,err := ormObject.Insert(list)
+	if err!=nil {
+		log.Fatal(err)
+		return 0,"新增失败！"
+	}
+
+	return int(id),"新增成功！"
 }
 
 //查询多条
@@ -33,17 +66,9 @@ func Test21() []orm.Params {
 }
 
 func Test2() {
-	InsertLists()
+	//status,msg := InsertList()
+	//fmt.Print(status,msg)
 }
-
-/**
-插入列表数据
- */
-func InsertLists() {
-
-}
-
-
 
 //普通查询
 func Test1() {

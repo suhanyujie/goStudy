@@ -13,25 +13,22 @@ import (
 	"io/ioutil"
 	"log"
 	"sync"
+	"time"
+	"lesson/gorm/beegoOrm"
 )
 
 var BaseUrl string;
 
-type FictionOneOfList struct {
-	title string
-	url   string
-}
-
 /**
 处理任务数据
  */
-func DealTask(ch1 chan FictionOneOfList,wg sync.WaitGroup) {
+func DealTask(ch1 chan beegoOrm.FictionOneOfList, wg sync.WaitGroup) {
 	for {
 		select {
 		case oneTask := <-ch1:
-			fmt.Println(oneTask.title)
-			status, returnErr := GetDetail(oneTask.url)
-			if status!=nil {
+			fmt.Println(oneTask.Title)
+			status, returnErr := GetDetail(oneTask.Url)
+			if status != nil {
 				log.Fatal(returnErr)
 			}
 		}
@@ -41,7 +38,7 @@ func DealTask(ch1 chan FictionOneOfList,wg sync.WaitGroup) {
 /**
 获取小说列表页
  */
-func GetList(url string) (status interface{}, data []FictionOneOfList, returnVarerror error) {
+func GetList(url string) (status interface{}, data []beegoOrm.FictionOneOfList, returnVarerror error) {
 	result, err := GetHttpResponse(url)
 	if err != nil {
 		return 30019, nil, err
@@ -51,16 +48,20 @@ func GetList(url string) (status interface{}, data []FictionOneOfList, returnVar
 	if err != nil {
 		return 30024, nil, err
 	}
-	var detailContent []FictionOneOfList
+	var detailContent []beegoOrm.FictionOneOfList
 	dom.Find("#list dl dd a").Each(func(i int, s *goquery.Selection) {
 		title := s.Text()
 		url, _ := s.Attr("href")
-		oneList := FictionOneOfList{
+		oneList := &beegoOrm.FictionOneOfList{
 			title,
 			BaseUrl + "/" + url,
 		}
-		
-		detailContent = append(detailContent, oneList)
+		detailContent = append(detailContent, *oneList)
+		insertId, msg := beegoOrm.InsertList(*oneList)
+		if insertId < 1 {
+			log.Fatal(msg)
+		}
+		time.Sleep(time.Second*1)
 	});
 
 	return nil, detailContent, errors.New("任务完成")

@@ -1,4 +1,4 @@
-package main
+package testMain
 
 import (
 	"lesson/gorm/beegoOrm"

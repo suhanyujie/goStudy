@@ -18,7 +18,7 @@ func init() {
 }
 
 //查询多条
-func Test2() []orm.Params {
+func Test21() []orm.Params {
 	ormObject := orm.NewOrm()
 	var lists []orm.Params
 	qs := ormObject.QueryTable("NovelList")
@@ -31,6 +31,19 @@ func Test2() []orm.Params {
 	}
 	return lists
 }
+
+func Test2() {
+	InsertLists()
+}
+
+/**
+插入列表数据
+ */
+func InsertLists() {
+
+}
+
+
 
 //普通查询
 func Test1() {

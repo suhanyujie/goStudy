@@ -12,13 +12,13 @@ import (
 
 func init() {
 	beego.LoadAppConfig("ini", "src/lesson/gorm/beegoOrm/config/database.conf")
-	connectionStr := beego.AppConfig.String("connection1")
-	err := orm.RegisterDataBase("bbs_test", "mysql", connectionStr, 30)
+	//connectionStr := beego.AppConfig.String("connection1")
+	err := orm.RegisterDataBase("default", "mysql", "root:123456@tcp(127.0.0.1:3306)/bbs_test?charset=utf8", 30)
 	if err != nil {
 		log.Fatal(err)
 	}
 	orm.RegisterModel(new(models.NovelList), new(models.NovelContent), new(models.NovelMain))
-	err = orm.RunSyncdb("bbs_test", false, true)
+	err = orm.RunSyncdb("default", false, true)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -58,12 +58,9 @@ func GetList(url string) (status interface{}, data []beegoOrm.FictionOneOfList, 
 		}
 		detailContent = append(detailContent, *oneList)
 		insertId, msg := beegoOrm.InsertList(*oneList)
-		if insertId < 1 {
-			log.Fatal(msg)
-		}
-		time.Sleep(time.Second*1)
+		log.Println("[" + string(insertId) + "]" + msg)
+		time.Sleep(time.Second * 1)
 	});
-
 	return nil, detailContent, errors.New("任务完成")
 }
 

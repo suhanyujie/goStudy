@@ -7,6 +7,7 @@ import (
 	"github.com/astaxie/beego/logs"
 	"sync"
 	"lesson/gorm/beegoOrm"
+	string2 "practice/http/libs/string"
 )
 
 var chTask = make(chan beegoOrm.FictionOneOfList)
@@ -14,9 +15,9 @@ var chTask = make(chan beegoOrm.FictionOneOfList)
 // 入口函数
 func main() {
 	var wg sync.WaitGroup
-	//chapterName := "第一千二百零六"
-	//num := string2.Chinese2Int(chapterName)
-	//fmt.Println(num)
+	chapterName := "第十章"
+	num := string2.Chinese2Int(chapterName)
+	fmt.Println(num)
 	/*   */
 	listUrl := "https://www.biduo.cc/biquge/17_17308"
 	//url := "https://www.biduo.cc/biquge/17_17308/c8698877.html"

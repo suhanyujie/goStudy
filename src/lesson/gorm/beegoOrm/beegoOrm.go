@@ -7,7 +7,6 @@ import (
 	"log"
 	"lesson/gorm/beegoOrm/models"
 	"github.com/astaxie/beego"
-	string2 "practice/http/libs/string"
 )
 
 func init() {
@@ -27,18 +26,19 @@ func init() {
 type FictionOneOfList struct {
 	Title string
 	Url   string
+	InsertId int
+	Chapter int
 }
 
 /**
 插入列表数据
  */
 func InsertList(OneTask FictionOneOfList)(int,string) {
-	chanpterNum := string2.Chinese2Int(OneTask.Title)
 	list := &models.NovelList{
 		NovelId:11,
 		Url:OneTask.Url,
 		Title:OneTask.Title,
-		Chapter:chanpterNum,
+		Chapter:OneTask.Chapter,
 	}
 	ormObject := orm.NewOrm()
 	id,err := ormObject.Insert(list)
@@ -49,6 +49,21 @@ func InsertList(OneTask FictionOneOfList)(int,string) {
 
 	return int(id),"新增成功！"
 }
+
+/**
+插入详细内容数据
+ */
+func InsertDetail(detail models.NovelContent)(int,string) {
+	ormObject := orm.NewOrm()
+	id,err := ormObject.Insert(&detail)
+	if err!=nil {
+		log.Fatal(err)
+		return 0,"新增详细内容失败！"
+	}
+
+	return int(id),"新增详细内容成功！"
+}
+
 
 //查询多条
 func Test21() []orm.Params {

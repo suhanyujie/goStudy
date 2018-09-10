@@ -3,8 +3,8 @@ package testSpider
 import (
 	"github.com/PuerkitoBio/goquery"
 	"bytes"
-	"os"
-	"practice/http/file"
+	//"os"
+	//"practice/http/file"
 	"errors"
 	"net/http"
 	"fmt"
@@ -15,6 +15,9 @@ import (
 	"sync"
 	"time"
 	"lesson/gorm/beegoOrm"
+	"lesson/gorm/beegoOrm/models"
+	string2 "practice/http/libs/string"
+	"strings"
 )
 
 var BaseUrl string;
@@ -23,14 +26,26 @@ var BaseUrl string;
 处理任务数据
  */
 func DealTask(ch1 chan beegoOrm.FictionOneOfList, wg sync.WaitGroup) {
+	wg.Add(1)
 	for {
 		select {
 		case oneTask := <-ch1:
 			fmt.Println(oneTask.Title)
-			status, returnErr := GetDetail(oneTask.Url)
+			status,detailContent, returnErr := GetDetail(oneTask.Url)
 			if status != nil {
 				log.Fatal(returnErr)
 			}
+			//将数据存放到数据库中
+			detail := &models.NovelContent{
+				ListId:uint(oneTask.InsertId),
+				Chapter:oneTask.Chapter,
+				Title:oneTask.Title,
+				Content:detailContent,
+				WorkerId:0,
+				ErrFlag:1,
+			}
+			insertId, _ := beegoOrm.InsertDetail((*detail))
+			fmt.Printf("详细内容爬取完成：%d\n", insertId)
 		}
 	}
 }
@@ -38,7 +53,7 @@ func DealTask(ch1 chan beegoOrm.FictionOneOfList, wg sync.WaitGroup) {
 /**
 获取小说列表页
  */
-func GetList(url string) (status interface{}, data []beegoOrm.FictionOneOfList, returnVarerror error) {
+func GetList(chTask chan beegoOrm.FictionOneOfList,url string) (status interface{}, data []beegoOrm.FictionOneOfList, returnVarerror error) {
 	result, err := GetHttpResponse(url)
 	if err != nil {
 		return 30019, nil, err
@@ -48,50 +63,58 @@ func GetList(url string) (status interface{}, data []beegoOrm.FictionOneOfList, 
 	if err != nil {
 		return 30024, nil, err
 	}
-	var detailContent []beegoOrm.FictionOneOfList
+	var listArr []beegoOrm.FictionOneOfList
 	dom.Find("#list dl dd a").Each(func(i int, s *goquery.Selection) {
 		title := s.Text()
+		//如果不包含 第、章等字样，则跳过
+		if !strings.Contains(title,"第") || !strings.Contains(title,"章") {
+			return
+		}
 		url, _ := s.Attr("href")
 		oneList := &beegoOrm.FictionOneOfList{
 			title,
 			BaseUrl + "/" + url,
+			0,
+			string2.Chinese2Int(title),
 		}
-		detailContent = append(detailContent, *oneList)
 		insertId, msg := beegoOrm.InsertList(*oneList)
-		log.Println("[" + string(insertId) + "]" + msg)
-		time.Sleep(time.Second * 1)
+		oneList.InsertId = insertId
+		chTask<-(*oneList)
+		//listArr = append(listArr, *oneList)
+		log.Printf("[%d]%s\n", insertId, msg)
+		time.Sleep(time.Millisecond * 100)
 	});
-	return nil, detailContent, errors.New("任务完成")
+	return nil, listArr, errors.New("任务完成")
 }
 
 /**
 @desc 获取小说的详情
  */
-func GetDetail(url string) (status interface{}, returnErr error) {
+func GetDetail(url string) (status interface{}, content string, returnErr error) {
 	result, err := GetHttpResponse(url)
 	if err != nil {
-		return 30021, err
+		return 30021,"", err
 	}
 	//解析html内容
 	dom, err := goquery.NewDocumentFromReader(bytes.NewReader(result))
 	if err != nil {
-		return 30026, err
+		return 30026,"", err
 	}
 	var detailContent string
 	dom.Find(".box_con #content").Each(func(i int, s *goquery.Selection) {
 		detailContent = s.Text()
 	});
-	fmt.Println(detailContent)
-	dir, _ := os.Getwd()
-	newFileName := dir + "/src/practice/http/testSpider/cache/fiction.inc"
+	//fmt.Println(detailContent)
+	//dir, _ := os.Getwd()
+	//newFileName := dir + "/src/practice/http/testSpider/cache/fiction.inc"
 	//将内容写入文件中
-	fileContent := []byte(detailContent)
-	err = file.SsWriteFile(newFileName, fileContent)
-	if err != nil {
-		return 30036, err
-	}
+	//fileContent := []byte(detailContent)
+	//err = file.SsWriteFile(newFileName, fileContent)
+	//if err != nil {
+	//	return 30036,"", err
+	//}
 
-	return nil, errors.New("任务完成...")
+	return nil,detailContent, errors.New("任务完成...")
 }
 
 /**
@@ -116,9 +139,9 @@ func GetHttpResponse(url string) ([]byte, error) {
 		return nil, errors.New(err.Error() + "-------[30021]")
 	}
 	defer response.Body.Close()
-	fmt.Println(response.StatusCode)
+	//fmt.Println(response.StatusCode)
 	if response.StatusCode >= 300 && response.StatusCode <= 500 {
-		return nil, errors.New(fmt.Sprintf("改请求的状态码为：%d\n", response.StatusCode))
+		return nil, errors.New(fmt.Sprintf("该请求的状态码为：%d\n", response.StatusCode))
 	}
 	utf8Content := transform.NewReader(response.Body, simplifiedchinese.GBK.NewDecoder())
 

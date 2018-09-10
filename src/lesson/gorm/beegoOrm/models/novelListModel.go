@@ -8,7 +8,7 @@ type NovelMain struct {
 	BaseUrl     string
 	NovelStatus uint
 	Desc        string
-	InsertDate  orm.DateField
+	InsertDate  orm.DateField `orm:"auto_now"`
 }
 
 type NovelList struct {
@@ -24,10 +24,10 @@ type NovelList struct {
 type NovelContent struct {
 	Id       uint
 	ListId   uint
-	Chapter  uint
+	Chapter  int
 	Title    string
 	Content  string
 	WorkerId uint
-	Date     orm.DateField
+	Date     orm.DateField `orm:"auto_now"`
 	ErrFlag  uint
 }

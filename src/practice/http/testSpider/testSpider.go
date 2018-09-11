@@ -48,6 +48,7 @@ func DealTask(ch1 chan beegoOrm.FictionOneOfList, wg sync.WaitGroup) {
 			fmt.Printf("详细内容爬取完成：%d\n", insertId)
 		}
 	}
+	wg.Done()
 }
 
 /**
@@ -76,6 +77,20 @@ func GetList(chTask chan beegoOrm.FictionOneOfList,url string) (status interface
 			BaseUrl + "/" + url,
 			0,
 			string2.Chinese2Int(title),
+		}
+		//查询这个章节的是否已经存在于数据库中
+		where := map[string]string{
+			"chapter":string(oneList.Chapter),
+			"novel_id":"11",
+		}
+		existList,err := beegoOrm.QueryList(where)
+		if err!=nil {
+			log.Println(existList)
+			log.Println(err)
+		}
+		if existList.Id>0 {
+			fmt.Println("["+oneList.Title+"]跳过这一次插入...")
+			return
 		}
 		insertId, msg := beegoOrm.InsertList(*oneList)
 		oneList.InsertId = insertId

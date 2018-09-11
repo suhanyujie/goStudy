@@ -26,8 +26,8 @@ func main() {
 	testSpider.GetBaseUrl(listUrl)
 	wg.Add(1)
 	go func(wg sync.WaitGroup) {
-		status,_,err := testSpider.GetList(chTask,listUrl)
-		if status!=nil {
+		status, _, err := testSpider.GetList(chTask, listUrl)
+		if status != nil {
 			log.Fatal(err)
 		}
 		logs.Info(err)

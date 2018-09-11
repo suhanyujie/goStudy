@@ -30,6 +30,24 @@ type FictionOneOfList struct {
 	Chapter int
 }
 
+//查询列表
+func QueryList(params map[string]string) (models.NovelList,error) {
+	o := orm.NewOrm()
+	qs := o.QueryTable("novel_list")
+	if novel_id,ok:=params["novel_id"];ok {
+		qs = qs.Filter("novel_id", novel_id)
+	}
+	if chapter,ok:=params["chapter"];ok {
+		qs = qs.Filter("chapter", chapter)
+	}
+	var oneList models.NovelList
+	err := qs.One(&oneList)
+	if err!=nil {
+		log.Println(err)
+	}
+	return oneList,nil
+}
+
 /**
 插入列表数据
  */

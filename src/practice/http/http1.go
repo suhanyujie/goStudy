@@ -18,8 +18,8 @@ func main() {
 	//url := "https://www.biduo.cc/biquge/17_17308/c8698877.html"
 	//status,err := testSpider.GetDetail(url)
 	testSpider.GetBaseUrl(listUrl)
-	wg.Add(1)
 	go func(wg sync.WaitGroup) {
+		wg.Add(1)
 		status, _, err := testSpider.GetList(chTask, listUrl)
 		if status != nil {
 			log.Fatal(err)

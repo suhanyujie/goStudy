@@ -18,6 +18,8 @@ import (
 	"lesson/gorm/beegoOrm/models"
 	string2 "practice/http/libs/string"
 	"strings"
+	"strconv"
+	"math/rand"
 )
 
 var BaseUrl string;
@@ -30,6 +32,10 @@ func DealTask(ch1 chan beegoOrm.FictionOneOfList, wg sync.WaitGroup) {
 	for {
 		select {
 		case oneTask := <-ch1:
+			//产生一个随机的秒数延迟 避免被加入黑名单
+			ms := rand.Intn(500) + 1000
+			time.Sleep(time.Millisecond * time.Duration(ms))
+			fmt.Println("已经sleep完毕")
 			fmt.Println(oneTask.Title)
 			status,detailContent, returnErr := GetDetail(oneTask.Url)
 			if status != nil {
@@ -80,12 +86,12 @@ func GetList(chTask chan beegoOrm.FictionOneOfList,url string) (status interface
 		}
 		//查询这个章节的是否已经存在于数据库中
 		where := map[string]string{
-			"chapter":string(oneList.Chapter),
 			"novel_id":"11",
+			"chapter":strconv.Itoa(oneList.Chapter),
 		}
 		existList,err := beegoOrm.QueryList(where)
+		log.Println(existList)
 		if err!=nil {
-			log.Println(existList)
 			log.Println(err)
 		}
 		if existList.Id>0 {

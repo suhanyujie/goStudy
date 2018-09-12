@@ -19,5 +19,5 @@ git pull --allow-unrelated-histories
 ```
 * 参考资料 https://www.jianshu.com/p/39b890d6e73d
 
-#### 修改git提交时的config中的usernaem
+#### 修改git提交时的config中的username
 * `vi ~/.gitconfig`; 然后在文件中直接修改即可

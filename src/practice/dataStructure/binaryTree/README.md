@@ -41,4 +41,4 @@ https://blog.csdn.net/followmyinclinations/article/details/50426413
 
 * 平衡因子的计算 https://blog.csdn.net/travelerwz/article/details/52186357 （有点小错误）
 * 二叉树的一些概念  https://blog.csdn.net/qq_37887537/article/details/75647670
-* 要学习哪些树
+* 要学习哪些树 [点此前往](https://mp.weixin.qq.com/s?__biz=MzUxMTk0MDI0Mw==&mid=2247483703&idx=1&sn=12b9a7c13036216c25a2c909abad5e19&chksm=f96d42cbce1acbdd0854712086435b910349bec7076da0115b4f720cf91fbc344048d0087c02&mpshare=1&scene=1&srcid=0911JDSXZQDVZG2OFE3Qdq1Q&key=dcbe06cbc6dde9f86ae3bdb0ba4389e0271124d09d13d5e187a935f04a293f3432d72ce5eda0b420e84d732900ac082440746a8d9545ff9d2b88b318fcee868fa2f264cde1a7dce9ef7c5a606605125a&ascene=0&uin=NDcxMTY4Mzc1&devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.11.5+build(15F34)&version=12020810&nettype=WIFI&lang=zh_CN&fontScale=100&pass_ticket=OTvthPCnI%2BpI58GVRtnjn4%2B5CJ3s4szVZdU16magQoHu3tCWdlzw9jmxnx0JUDOs)

@@ -1,7 +1,7 @@
 # go的学习代码
 
 ## 项目list
-- [x] [点此前往](src/practice/http)
+- [x] 简单爬虫 [点此前往](src/practice/http)
 - [ ] 数据结构
 
 

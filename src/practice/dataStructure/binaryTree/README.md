@@ -25,10 +25,14 @@
 
 
 ## todo list
-* 二叉树
-* 二叉搜索树
-* 平衡二叉树
-* 红黑树
+- [ ] 二叉树
+- [ ] 二叉搜索树
+- [ ] 平衡二叉树
+- [ ] 红黑树
+- [ ] 伸展树
+- [ ] AA-树
+- [ ] 二叉堆
+
 
 ## 参考资料
 * 主要原理和流程
@@ -37,3 +41,4 @@ https://blog.csdn.net/followmyinclinations/article/details/50426413
 
 * 平衡因子的计算 https://blog.csdn.net/travelerwz/article/details/52186357 （有点小错误）
 * 二叉树的一些概念  https://blog.csdn.net/qq_37887537/article/details/75647670
+* 要学习哪些树

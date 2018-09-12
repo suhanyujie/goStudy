@@ -53,7 +53,7 @@ func QueryList(params map[string]string) (models.NovelList,error) {
  */
 func InsertList(OneTask FictionOneOfList)(int,string) {
 	list := &models.NovelList{
-		NovelId:11,
+		NovelId:12,
 		Url:OneTask.Url,
 		Title:OneTask.Title,
 		Chapter:OneTask.Chapter,

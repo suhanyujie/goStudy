@@ -10,7 +10,7 @@ import "fmt"
  */
 // 入口函数
 func main() {
-	var numArr = [10]int{21, 32, 19, 56, 29, 37, 16, 91, 126, 69,}
+	var numArr = [10]int{21, 32, 19, 56, 29, 37, 16, 91, 126, 69}
 
 	RealBubbleSort(numArr)
 
@@ -33,13 +33,15 @@ func main() {
 func RealBubbleSort(numArr [10]int) {
 	numLength := len(numArr)
 	for i := 0; i < numLength; i++ {
-		for j := 0; j < numLength-1; j++ {
+		for j := 0; j < (numLength - i - 1); j++ {
 			if numArr[j] > numArr[j+1] {
 				//互换2个值
-				numArr[i], numArr[j] = numArr[j], numArr[i]
+				numArr[j], numArr[j+1] = numArr[j+1], numArr[j]
 			}
 		}
+		fmt.Println(numArr)
 	}
 
+	fmt.Println("最终结果如下：")
 	fmt.Println(numArr)
 }

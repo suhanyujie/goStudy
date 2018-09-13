@@ -3,6 +3,7 @@
 /bin
 /pkg
 /projectFilesBackup
+/src/.DS_Store
 /src/github.com
 /src/github.com/Unknwon
 /src/github.com/user

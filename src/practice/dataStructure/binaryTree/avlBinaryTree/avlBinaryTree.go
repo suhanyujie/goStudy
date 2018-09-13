@@ -30,7 +30,7 @@ type AvlTree struct {
 }
 
 //1.创建树
-func CreateAvlTree(data interface{},left *TreeNode,right *TreeNode) *TreeNode {
+func CreateAvlTree(data interface{}, left *TreeNode, right *TreeNode) *TreeNode {
 	newNode := new(TreeNode)
 	newNode.Left = left
 	newNode.Right = right
@@ -52,28 +52,57 @@ func Height(tree *TreeNode) int {
 }
 
 //3.比较2个interface{}类型的数据大小，返回大的那个值
-func MaxOfI(data1,data2 interface{}) interface{} {
+func MaxOfI(data1, data2 interface{}) interface{} {
 	num1 := data1.(int)
 	num2 := data2.(int)
-	if num1>num2 {
+	if num1 > num2 {
 		return data1
 	} else {
 		return data2
 	}
 }
 
-//4.1 左旋
-/**
-
- */
+//4.1 左左旋
 func LLRotation(node *TreeNode) *TreeNode {
 	k1 := node.Left
 	node.Left = k1.Right
 	k1.Right = node;
-	node.Height = Max(node.Left.Height,node.Right.Height) + 1
-	k1.Height = Max(k1.Left.Height,node.Height) + 1
+	node.Height = Max(node.Left.Height, node.Right.Height) + 1
+	k1.Height = Max(k1.Left.Height, node.Height) + 1
 
 	return k1
+}
+
+//4.2右右旋转
+func RRRotation(node *TreeNode) *TreeNode {
+	k1 := node
+	var k2 *TreeNode = k1.Right
+	k1.Right = k2.Left
+	k2.Left = k1
+	k1.Height = Max(k1.Left.Height, k1.Right.Height) + 1
+	k2.Height = Max(k2.Right.Height, k1.Height) + 1
+
+	return k2
+}
+
+/**
+4.3左右旋转
+ */
+func LRRotation(node *TreeNode) *TreeNode {
+	var k1 *TreeNode = RRRotation(node.Left)
+	node.Left = k1
+	var k2 *TreeNode = LLRotation(node)
+	return k2
+}
+
+/**
+4.4右左旋转
+ */
+func RLRotation(node *TreeNode)*TreeNode {
+	var k1 *TreeNode = LLRotation(node.Right)
+	node.Right = k1
+	var k2 *TreeNode = RRRotation(node)
+	return k2
 }
 
 func Max(a, b int) int {

@@ -15,9 +15,8 @@ func main() {
 	for i := 0; i < numLength; i++ {
 		for j := i+1; j < numLength; j++ {
 			if numArr[i]>numArr[j] {
-				tmp := numArr[i]
-				numArr[i] = numArr[j]
-				numArr[j] = tmp
+				//互换2个值
+				numArr[i],numArr[j] = numArr[j],numArr[i]
 			}
 		}
 	}

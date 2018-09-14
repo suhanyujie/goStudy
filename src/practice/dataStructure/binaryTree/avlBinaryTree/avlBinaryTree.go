@@ -40,6 +40,40 @@ func CreateAvlTree(data interface{}, left *TreeNode, right *TreeNode) *TreeNode 
 	return newNode
 }
 
+/**
+1.1新增节点
+ */
+func InsertNode(val int,tree *TreeNode)*TreeNode {
+	if tree == nil{
+		tree  = &TreeNode{
+			1,
+			35,
+			nil,
+			nil,
+			1,
+		}
+	}
+	var newNode = new(TreeNode)
+	newNode.Data = 37
+	newNode.Type = 1
+	newNode.Height = 1
+
+	if val > tree.Data.(int) {
+		tree.Right = newNode
+		//检查是否失衡
+		if Height(tree.Right)-Height(tree.Left) >= 2 {
+			tree = RRRotation(tree)
+		}
+	} else if val <= tree.Data.(int) {
+		tree.Left = newNode
+		if Height(tree.Left)-Height(tree.Right) >= 2 {
+			tree = LLRotation(tree)
+		}
+	}
+
+	return tree
+}
+
 //2.获取树的高度
 /**
 树的高度为最大层次。即空的二叉树的高度是0，非空树的高度等于它的最大层次(根的层次为1，根的子节点为第2层，依次类推)。
@@ -98,7 +132,7 @@ func LRRotation(node *TreeNode) *TreeNode {
 /**
 4.4右左旋转
  */
-func RLRotation(node *TreeNode)*TreeNode {
+func RLRotation(node *TreeNode) *TreeNode {
 	var k1 *TreeNode = LLRotation(node.Right)
 	node.Right = k1
 	var k2 *TreeNode = RRRotation(node)

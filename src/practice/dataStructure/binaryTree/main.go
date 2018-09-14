@@ -2,18 +2,22 @@ package main
 
 import (
 	"practice/dataStructure/binaryTree/binarySearchTree"
-	"fmt"
 	"math/rand"
+	"fmt"
+	"practice/dataStructure/binaryTree/avlBinaryTree"
 )
-
 
 // 入口函数
 func main() {
+	TestAvl()
+}
 
+func TestAvl() {
+	tree := avlBinaryTree.CreateAvlTree(1, nil, nil)
+	fmt.Println(tree)
+}
 
-
-
-
+func TestBinaryTree() {
 	//二叉搜索树的初始化
 	bst := binarySearchTree.GetInitBst()
 	for i := 0; i < 24; i++ {
@@ -31,4 +35,3 @@ func main() {
 		fmt.Printf("\n已经找到值为%d的节点，其地址是：%p\n", searchValue, findedNode)
 	}
 }
-

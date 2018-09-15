@@ -1,5 +1,7 @@
 package avlBinaryTree
 
+import "fmt"
+
 /**
 平衡二叉树的实现
 	介绍+实现  https://www.cnblogs.com/skywang12345/p/3576969.html
@@ -43,9 +45,9 @@ func CreateAvlTree(data interface{}, left *TreeNode, right *TreeNode) *TreeNode 
 /**
 1.1新增节点
  */
-func InsertNode(val int,tree *TreeNode)*TreeNode {
-	if tree == nil{
-		tree  = &TreeNode{
+func InsertNode(val int, tree *TreeNode) *TreeNode {
+	if tree == nil {
+		tree = &TreeNode{
 			1,
 			35,
 			nil,
@@ -64,11 +66,13 @@ func InsertNode(val int,tree *TreeNode)*TreeNode {
 		if Height(tree.Right)-Height(tree.Left) >= 2 {
 			tree = RRRotation(tree)
 		}
-	} else if val <= tree.Data.(int) {
+	} else if val < tree.Data.(int) {
 		tree.Left = newNode
 		if Height(tree.Left)-Height(tree.Right) >= 2 {
 			tree = LLRotation(tree)
 		}
+	} else {
+		fmt.Println("失败，不允许添加相同值的节点！")
 	}
 
 	return tree
@@ -139,10 +143,31 @@ func RLRotation(node *TreeNode) *TreeNode {
 	return k2
 }
 
+/**
+获取两个数中 值大的那个
+ */
 func Max(a, b int) int {
 	if a > b {
 		return a
 	} else {
 		return b
+	}
+}
+
+// todo
+func (_this *TreeNode) ToString() {
+	ShowNode(_this)
+}
+
+func ShowNode(node *TreeNode) {
+	if node.Left == nil {
+		fmt.Printf("%d\t", node.Data.(int))
+	} else {
+		ShowNode(node.Left)
+	}
+	if node.Right == nil {
+		fmt.Printf("%d\t", node.Data.(int))
+	} else {
+		ShowNode(node.Right)
 	}
 }

@@ -14,7 +14,10 @@ func main() {
 
 func TestAvl() {
 	tree := avlBinaryTree.CreateAvlTree(1, nil, nil)
-	fmt.Println(tree)
+	avlBinaryTree.InsertNode(12,tree)
+	avlBinaryTree.InsertNode(12,tree)
+
+	tree.ToString()
 }
 
 func TestBinaryTree() {

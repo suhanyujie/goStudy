@@ -55,27 +55,41 @@ func InsertNode(val int, tree *TreeNode) *TreeNode {
 			1,
 		}
 	}
+	var originRoot *TreeNode = tree;
 	var newNode = new(TreeNode)
-	newNode.Data = 37
+	newNode.Data = val
 	newNode.Type = 1
 	newNode.Height = 1
 
-	if val > tree.Data.(int) {
-		tree.Right = newNode
-		//检查是否失衡
-		if Height(tree.Right)-Height(tree.Left) >= 2 {
-			tree = RRRotation(tree)
+	//先遍历，找到叶子节点
+	for {
+		if val > tree.Data.(int) {
+			if tree.Right == nil {
+				tree.Right = newNode
+				//检查是否失衡
+				if Height(originRoot.Right)-Height(originRoot.Left) >= 2 {
+					originRoot = RRRotation(originRoot)
+				}
+				break
+			}
+			tree = tree.Right
+		} else if (val < tree.Data.(int)) {
+			if tree.Left == nil {
+				tree.Left = newNode
+				if Height(originRoot.Left)-Height(originRoot.Right) >= 2 {
+					tree = LLRotation(originRoot)
+				}
+				break
+			}
+			tree = tree.Left
+		} else {
+			fmt.Println("失败，不允许添加相同值的节点！")
+			break
 		}
-	} else if val < tree.Data.(int) {
-		tree.Left = newNode
-		if Height(tree.Left)-Height(tree.Right) >= 2 {
-			tree = LLRotation(tree)
-		}
-	} else {
-		fmt.Println("失败，不允许添加相同值的节点！")
+
 	}
 
-	return tree
+	return originRoot
 }
 
 //2.获取树的高度
@@ -154,20 +168,61 @@ func Max(a, b int) int {
 	}
 }
 
+/**
+前序遍历
+
+ */
+func (_this *TreeNode) PrevTraverse()  {
+	fmt.Printf("%d\t", _this.Data.(int))
+	if _this.Left != nil {
+		ShowNode(_this.Left)
+	}
+	if _this.Right != nil {
+		ShowNode(_this.Right)
+	}
+}
+
+/**
+中序遍历
+
+ */
+func (_this *TreeNode) MiddleTraverse()  {
+	if _this.Left != nil {
+		ShowNode(_this.Left)
+	}
+	fmt.Printf("%d\t", _this.Data.(int))
+	if _this.Right != nil {
+		ShowNode(_this.Right)
+	}
+}
+
+/**
+后序遍历
+
+ */
+func (_this *TreeNode) AfterTraverse()  {
+	if _this.Left != nil {
+		ShowNode(_this.Left)
+	}
+	if _this.Right != nil {
+		ShowNode(_this.Right)
+	}
+	fmt.Printf("%d\t", _this.Data.(int))
+}
+
+
 // todo
 func (_this *TreeNode) ToString() {
 	ShowNode(_this)
 }
 
 func ShowNode(node *TreeNode) {
-	if node.Left == nil {
-		fmt.Printf("%d\t", node.Data.(int))
-	} else {
+	if node.Left != nil {
 		ShowNode(node.Left)
+		//fmt.Printf("%d\t", node.Data.(int))
 	}
-	if node.Right == nil {
-		fmt.Printf("%d\t", node.Data.(int))
-	} else {
+	if node.Right != nil {
 		ShowNode(node.Right)
 	}
+	fmt.Printf("%d\t", node.Data.(int))
 }

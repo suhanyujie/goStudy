@@ -219,7 +219,6 @@ func (_this *TreeNode) ToString() {
 func ShowNode(node *TreeNode) {
 	if node.Left != nil {
 		ShowNode(node.Left)
-		//fmt.Printf("%d\t", node.Data.(int))
 	}
 	if node.Right != nil {
 		ShowNode(node.Right)

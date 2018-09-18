@@ -23,8 +23,10 @@ func QuickSort() {
 func Qsort(arr *[]int, p, r int) {
 	numLength := len(*arr)
 	pivotIndex := Partition(arr, 0, numLength)
-
 	fmt.Println(pivotIndex)
+	Qsort(arr, 0, pivotIndex)
+	Qsort(arr, pivotIndex, numLength)
+	fmt.Println(arr)
 }
 
 func Partition(arr *[]int, p, r int) int {
@@ -34,21 +36,28 @@ func Partition(arr *[]int, p, r int) int {
 	r1 := r - 1
 	l1 := p + 1
 	for r1 >= l1 {
-		for ; r1 >= l1; r1-- {
-			if (*arr)[r1] < pivot {
-				break;
-			}
+		for ; r1 >= l1 && (*arr)[r1] > pivot; {
+			r1--
 		}
-		for ; l1 <= r1; l1++ {
-			if (*arr)[l1] > pivot {
-				break;
+		for ; l1 <= r1 && (*arr)[l1] < pivot; {
+			if l1 == r1 {
+				(*arr)[l1] = pivot
+				return l1
 			}
+			l1++
 		}
 		if l1 == r1 {
 			(*arr)[l1] = pivot
 			return l1
 		}
-		(*arr)[l1], (*arr)[r1] = (*arr)[r1], (*arr)[l1]
+
+		if l1 < r1 {
+			(*arr)[l1], (*arr)[r1] = (*arr)[r1], (*arr)[l1]
+		}
+		fmt.Printf("(*arr)[l1]:%d, (*arr)[r1]:%d\n",(*arr)[l1], (*arr)[r1])
+		if l1>r1 {
+			break
+		}
 	}
 
 	return 0

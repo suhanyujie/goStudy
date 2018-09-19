@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 /**
 快速排序
@@ -26,10 +28,8 @@ func Qsort(arr *[]int, p, r int) {
 		return
 	}
 	pivotIndex := Partition(arr, p, r)
-	fmt.Println(pivotIndex)
 	Qsort(arr, 0, pivotIndex-1)
 	Qsort(arr, pivotIndex+1, r)
-	return
 }
 
 func Partition(arr *[]int, p, r int) int {
@@ -38,21 +38,29 @@ func Partition(arr *[]int, p, r int) int {
 	pivot := (*dataArr)[p]
 	//r表示数组的长度，最后一个单元就是arr[r-1]
 	//对于l1的计算，第arr[p]是用作基准数的
-	l1 := p + 1
+	l1 := p
 	r1 := r
 	for r1 > l1 {
 		for ; r1 > l1 && (*arr)[r1] >= pivot; {
 			r1--
 		}
+		//if r1>l1 {
+		//	(*arr)[l1] = (*arr)[r1]
+		//}
 		for ; l1 < r1 && (*arr)[l1] <= pivot; {
 			l1++
 		}
+		//if l1<r1 {
+		//	(*arr)[r1] = (*arr)[l1]
+		//}
 		if l1 < r1 {
-			(*arr)[l1], (*arr)[r1] = (*arr)[r1], (*arr)[l1]
+			(*arr)[r1], (*arr)[l1] = (*arr)[l1], (*arr)[r1]
+		} else {
+			break
 		}
-		fmt.Printf("(*arr)[l1]:%d, (*arr)[r1]:%d\n", (*arr)[l1], (*arr)[r1])
+		fmt.Printf("l1:%d, r1:%d\n", l1, r1)
 	}
-	(*arr)[l1], (*dataArr)[p] = (*dataArr)[p], (*arr)[l1]
+	(*arr)[l1],(*dataArr)[p] = (*dataArr)[p],(*arr)[l1]
 
 	return l1
 }

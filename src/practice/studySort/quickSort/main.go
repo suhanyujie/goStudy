@@ -18,17 +18,18 @@ func QuickSort() {
 	var numArr = []int{21, 32, 19, 56, 29, 37, 16, 91, 126, 69}
 	numLength := len(numArr)
 	Qsort(&numArr, 0, numLength-1)
+	fmt.Println(numArr)
 }
 
 func Qsort(arr *[]int, p, r int) {
-	if p > r {
-		return;
+	if p >= r {
+		return
 	}
 	pivotIndex := Partition(arr, p, r)
 	fmt.Println(pivotIndex)
 	Qsort(arr, 0, pivotIndex-1)
 	Qsort(arr, pivotIndex+1, r)
-	fmt.Println(arr)
+	return
 }
 
 func Partition(arr *[]int, p, r int) int {
@@ -37,13 +38,13 @@ func Partition(arr *[]int, p, r int) int {
 	pivot := (*dataArr)[p]
 	//r表示数组的长度，最后一个单元就是arr[r-1]
 	//对于l1的计算，第arr[p]是用作基准数的
-	r1 := r - 1
 	l1 := p + 1
-	for r1 != l1 {
-		for ; r1 >= l1 && (*arr)[r1] > pivot; {
+	r1 := r
+	for r1 > l1 {
+		for ; r1 > l1 && (*arr)[r1] >= pivot; {
 			r1--
 		}
-		for ; l1 <= r1 && (*arr)[l1] < pivot; {
+		for ; l1 < r1 && (*arr)[l1] <= pivot; {
 			l1++
 		}
 		if l1 < r1 {
@@ -53,5 +54,5 @@ func Partition(arr *[]int, p, r int) int {
 	}
 	(*arr)[l1], (*dataArr)[p] = (*dataArr)[p], (*arr)[l1]
 
-	return 0
+	return l1
 }

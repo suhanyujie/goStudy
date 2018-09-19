@@ -21,11 +21,13 @@ func QuickSort() {
 }
 
 func Qsort(arr *[]int, p, r int) {
-	numLength := len(*arr)
-	pivotIndex := Partition(arr, 0, numLength)
+	if p > r {
+		return;
+	}
+	pivotIndex := Partition(arr, p, r)
 	fmt.Println(pivotIndex)
-	Qsort(arr, 0, pivotIndex)
-	Qsort(arr, pivotIndex, numLength)
+	Qsort(arr, 0, pivotIndex-1)
+	Qsort(arr, pivotIndex+1, r)
 	fmt.Println(arr)
 }
 
@@ -33,32 +35,23 @@ func Partition(arr *[]int, p, r int) int {
 	var dataArr *[]int;
 	dataArr = arr
 	pivot := (*dataArr)[p]
+	//r表示数组的长度，最后一个单元就是arr[r-1]
+	//对于l1的计算，第arr[p]是用作基准数的
 	r1 := r - 1
 	l1 := p + 1
-	for r1 >= l1 {
+	for r1 != l1 {
 		for ; r1 >= l1 && (*arr)[r1] > pivot; {
 			r1--
 		}
 		for ; l1 <= r1 && (*arr)[l1] < pivot; {
-			if l1 == r1 {
-				(*arr)[l1] = pivot
-				return l1
-			}
 			l1++
 		}
-		if l1 == r1 {
-			(*arr)[l1] = pivot
-			return l1
-		}
-
 		if l1 < r1 {
 			(*arr)[l1], (*arr)[r1] = (*arr)[r1], (*arr)[l1]
 		}
-		fmt.Printf("(*arr)[l1]:%d, (*arr)[r1]:%d\n",(*arr)[l1], (*arr)[r1])
-		if l1>r1 {
-			break
-		}
+		fmt.Printf("(*arr)[l1]:%d, (*arr)[r1]:%d\n", (*arr)[l1], (*arr)[r1])
 	}
+	(*arr)[l1], (*dataArr)[p] = (*dataArr)[p], (*arr)[l1]
 
 	return 0
 }

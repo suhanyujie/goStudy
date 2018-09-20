@@ -4,11 +4,12 @@
 * 学习各种排序算法，并用go语言代码实现
 
 ## todo list
-- [x] 冒泡排序bubble sort
-- [x] 选择排序
-- [x] 插入排序
-- [ ] 快速排序
-- [ ] 归并排序
+- [x] 冒泡排序 bubbleSort
+- [x] 选择排序 selectionSort
+- [x] 插入排序 insertionSort
+- [x] 快速排序 quickSort
+- [ ] 归并排序 mergeSort
+- [ ] 桶排序
 
 
 ## 参考资料

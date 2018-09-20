@@ -6,6 +6,8 @@ import "fmt"
 桶排序
 	桶排序的动效  https://www.cs.usfca.edu/~galles/visualization/BucketSort.html
 
+	JavaScript的实现  http://bubkoo.com/2014/01/15/sort-algorithm/bucket-sort/
+
  */
 
 // 入口函数

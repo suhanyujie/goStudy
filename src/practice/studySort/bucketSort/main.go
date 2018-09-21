@@ -31,3 +31,10 @@ func main() {
 	fmt.Println(max)
 	fmt.Println(min)
 }
+
+/**
+数字对应的桶索引计算
+ */
+func getBucketIndex(num, maximum, numberCount int) int {
+	return num * numberCount / (maximum + 1)
+}

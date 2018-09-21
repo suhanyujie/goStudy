@@ -14,3 +14,4 @@
 
 ## 参考资料
 * https://juejin.im/post/5b9492def265da0aff171b94?utm_source=gold_browser_extension
+* 算法珠玑 https://www.gitbook.com/book/soulmachine/algorithm-essentials

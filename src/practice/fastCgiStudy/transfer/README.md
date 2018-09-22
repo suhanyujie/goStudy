@@ -33,11 +33,11 @@ A FastCGI application plays one of several well-defined roles. The most familiar
 In the remainder of this specification the terms “FastCGI application,” “application process,” or “application server” are abbreviated to “application” whenever that won’t cause confusion.
 
 
-1.介绍
-`FastCGI` 是一个开放的 `CGI` 扩展，它为整个互联网应用提供了高性能而弥补了 Web 服务 APIs 的缺陷。
-这个规范有很明确的目标：从应用程序的角度看，为了指导做一个支持 FastCGI 的 FastCGI 应用和一个 Web 服务。很多 Web 服务器和 FastCGI 有关联，
-比如应用管理工具，没有好的方案来开发 Web 服务接口，以及一些其他此处没有描述的东西。
-这个说规范是针对 Unix （更准确的说是针对支持`Berkeley Sockets`的 POSIX 系统）。这个规范的大部分是描述一个简单的通信协议，它不依赖于字节序，和系统的扩展。
-我们将通过对比传统的 Unix 的 `CGI/1.1` 的实现来介绍 FastCGI 。 FastCGI 被设计成支持长连接，例如应用服务器。这是和传统的Unix 的 `CGI/1.1` 的实现的主要区别， `CGI/1.1` 创建一个进程，用它来响应一个请求，然后退出。
-一个 FastCGI 的初始化状态比一个 `CGI/1.1` 进程的初始化状态更加简洁，因为 FastCGI 进程在声明周期的开始时，没有连接任何东西。它没有按照惯例那样打开 `stdin` ， `stdout` ， `stderr` 这3个文件描述符，并且它没有接受很多来自环境变量的信息。 FastCGI 进程在初始化状态时的关键一点是监听一个 `socket` ，通过它接收来自 Web 服务的连接。
+### 1.介绍
+* `FastCGI` 是一个开放的 `CGI` 扩展，它为整个互联网应用提供了高性能而弥补了 Web 服务 APIs 的缺陷。
+* 这个规范有很明确的目标：从应用程序的角度看，为了指导做一个支持 FastCGI 的 FastCGI 应用和一个 Web 服务。很多 Web 服务器和 FastCGI 有关联，
+* 比如应用管理工具，没有好的方案来开发 Web 服务接口，以及一些其他此处没有描述的东西。
+* 这个说规范是针对 Unix （更准确的说是针对支持`Berkeley Sockets`的 POSIX 系统）。这个规范的大部分是描述一个简单的通信协议，它不依赖于字节序，和系统的扩展。
+* 我们将通过对比传统的 Unix 的 `CGI/1.1` 的实现来介绍 FastCGI 。 FastCGI 被设计成支持长连接，例如应用服务器。这是和传统的Unix 的 `CGI/1.1` 的实现的主要区别， `CGI/1.1` 创建一个进程，用它来响应一个请求，然后退出。
+* 一个 FastCGI 的初始化状态比一个 `CGI/1.1` 进程的初始化状态更加简洁，因为 FastCGI 进程在声明周期的开始时，没有连接任何东西。它没有按照惯例那样打开 `stdin` ， `stdout` ， `stderr` 这3个文件描述符，并且它没有接受很多来自环境变量的信息。 FastCGI 进程在初始化状态时的关键一点是监听一个 `socket` ，通过它接收来自 Web 服务的连接。
 

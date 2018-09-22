@@ -4,6 +4,7 @@
 - [x] 简单爬虫 [点此前往](src/practice/http)
 - [ ] 数据结构 [点此前往](src/practice/dataStructure/binaryTree)  进行中
 - [ ] 排序算法 [点此前往](src/practice/studySort)  进行中
+- [ ] fastcgi学习 [点此前往](src/practice/fastCgiStudy)  进行中
 
 
 ## 遇到的问题

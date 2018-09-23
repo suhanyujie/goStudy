@@ -8,6 +8,10 @@ import "fmt"
 
 	JavaScript的实现  http://bubkoo.com/2014/01/15/sort-algorithm/bucket-sort/
 
+
+	先预备好固定数量的桶，每个待排的数都通过一个函数计算得出对应的桶编号
+	每个桶中可以放多个数，以链表的数据结构进行存储
+
  */
 
 // 入口函数

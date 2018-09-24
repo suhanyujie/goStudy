@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"os"
 	"practice/studySort/bucketSort/dataStruct"
 )
 
@@ -18,25 +16,17 @@ import (
 
  */
 
+const BucketNum = 10
+
 // 入口函数
 func main() {
 	var numArr = []int{21, 32, 19, 56, 29, 37, 16, 91, 126, 69}
+	BucketSort(numArr)
+}
+
+// 输入一组数 对他们进行排序 并输出
+func BucketSort(numArr []int) {
 	numLength := len(numArr)
-	var link *dataStruct.LinkNode = dataStruct.GetNode(0)
-	for _,value := range numArr {
-		var newNode *dataStruct.LinkNode = new(dataStruct.LinkNode)
-		newNode.Data = value
-		link = link.Push(newNode)
-	}
-	//打印节点
-	dataStruct.PrintLink(link)
-	//断点
-	os.Exit(5)
-
-
-
-
-
 	var max, min int;
 	max = numArr[0];
 	min = numArr[0];
@@ -49,9 +39,19 @@ func main() {
 			min = numArr[i]
 		}
 	}
-
-	fmt.Println(max)
-	fmt.Println(min)
+	//预先准备好一定数量的桶
+	var buckets [BucketNum]*dataStruct.LinkNode
+	for i := 0; i < BucketNum; i++ {
+		buckets[i] = dataStruct.GetNode(0)
+	}
+	for _, value := range numArr {
+		bucketIndex := getBucketIndex(value, max, numLength)
+		var newNode *dataStruct.LinkNode = new(dataStruct.LinkNode)
+		newNode.Data = value
+		buckets[bucketIndex] = buckets[bucketIndex].Push(newNode)
+	}
+	//打印输出
+	dataStruct.PrintLink(buckets[1])
 }
 
 /**

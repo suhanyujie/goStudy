@@ -23,13 +23,13 @@ func main() {
 	var numArr = []int{21, 32, 19, 56, 29, 37, 16, 91, 126, 69}
 	numLength := len(numArr)
 	var link *dataStruct.LinkNode = dataStruct.GetNode(0)
-	var newNode *dataStruct.LinkNode = new(dataStruct.LinkNode)
 	for _,value := range numArr {
-		newNode.Data = value;
-		link.Push(newNode)
-		break
+		var newNode *dataStruct.LinkNode = new(dataStruct.LinkNode)
+		newNode.Data = value
+		link = link.Push(newNode)
 	}
-	fmt.Printf("%p,%T\n",newNode,newNode)
+	//打印节点
+	dataStruct.PrintLink(link)
 	//断点
 	os.Exit(5)
 

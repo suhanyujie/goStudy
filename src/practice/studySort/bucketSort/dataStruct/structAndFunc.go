@@ -1,5 +1,7 @@
 package dataStruct
 
+import "fmt"
+
 type LinkNode struct {
 	Data int
 	Prev *LinkNode
@@ -57,4 +59,11 @@ func (_this *LinkNode) Pop() *LinkNode {
 
 func GetNode(value int) *LinkNode {
 	return &LinkNode{value, nil, nil}
+}
+
+func PrintLink(node *LinkNode) {
+	//循环遍历节点
+	for ;node!=nil ;node = node.Next  {
+		fmt.Printf("%d\t", node.Data)
+	}
 }

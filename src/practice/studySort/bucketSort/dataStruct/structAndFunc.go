@@ -28,7 +28,7 @@ func (_this *LinkNode) Push(node *LinkNode) *LinkNode {
 	}
 	var rootNode *LinkNode = next;
 	//新加的节点插入到2个节点之间
-	for next = next.Next; next.Next != nil; next = next.Next {
+	for ; next.Next != nil; next = next.Next {
 		if node.Data > next.Data && node.Data <= next.Next.Data {
 			node.Next = next.Next
 			next.Next.Prev = node

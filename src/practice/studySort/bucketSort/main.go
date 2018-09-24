@@ -22,17 +22,20 @@ import (
 func main() {
 	var numArr = []int{21, 32, 19, 56, 29, 37, 16, 91, 126, 69}
 	numLength := len(numArr)
-
 	var link *dataStruct.LinkNode = dataStruct.GetNode(0)
 	var newNode *dataStruct.LinkNode = new(dataStruct.LinkNode)
 	for _,value := range numArr {
-		fmt.Printf("%p,%T\n",newNode,newNode)
 		newNode.Data = value;
 		link.Push(newNode)
 		break
 	}
 	fmt.Printf("%p,%T\n",newNode,newNode)
+	//断点
 	os.Exit(5)
+
+
+
+
 
 	var max, min int;
 	max = numArr[0];

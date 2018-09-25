@@ -16,6 +16,9 @@ import "fmt"
 	6.方法4.3 右左旋
 	7.方法4.4 右右旋
 
+注意事项：
+	每新增一个节点a，则a的height是0，因为插入操作后，a会成为叶子节点
+
  */
 
 type TreeNode struct {
@@ -49,47 +52,34 @@ func InsertNode(val int, tree *TreeNode) *TreeNode {
 	if tree == nil {
 		tree = &TreeNode{
 			1,
-			35,
+			val,
 			nil,
 			nil,
 			1,
 		}
+		return tree
 	}
 	var originRoot *TreeNode = tree;
-	var newNode = new(TreeNode)
-	newNode.Data = val
-	newNode.Type = 1
-	newNode.Height = 1
-
-	//先遍历，找到叶子节点
-	for {
-		if val > tree.Data.(int) {
-			if tree.Right == nil {
-				tree.Right = newNode
-				//检查是否失衡
-				if Height(originRoot.Right)-Height(originRoot.Left) >= 2 {
-					originRoot = RRRotation(originRoot)
-				}
-				break
-			}
-			tree = tree.Right
-		} else if (val < tree.Data.(int)) {
-			if tree.Left == nil {
-				tree.Left = newNode
-				if Height(originRoot.Left)-Height(originRoot.Right) >= 2 {
-					tree = LLRotation(originRoot)
-				}
-				break
-			}
-			tree = tree.Left
-		} else {
-			fmt.Println("失败，不允许添加相同值的节点！")
-			break
+	//通过递归 最终找到待插入的叶子节点
+	if val > tree.Data.(int) {
+		tree.Right = InsertNode(val, tree.Right)
+		//检查是否失衡
+		if Height(tree.Right)-Height(tree.Left) >= 2 {
+			originRoot = RRRotation(originRoot)
+			fmt.Println("发生了右右旋转")
 		}
-
+	} else if (val < tree.Data.(int)) {
+		tree.Left = InsertNode(val, tree.Left)
+		if Height(tree.Left)-Height(tree.Right) >= 2 {
+			tree = LLRotation(originRoot)
+			fmt.Println("发生了左左旋转")
+		}
+	} else {
+		fmt.Println("失败，不允许添加相同值的节点！")
 	}
+	tree.Height = Max(Height(tree.Left), Height(tree.Right)) + 1
 
-	return originRoot
+	return tree
 }
 
 //2.获取树的高度
@@ -116,10 +106,18 @@ func MaxOfI(data1, data2 interface{}) interface{} {
 
 //4.1 左左旋
 func LLRotation(node *TreeNode) *TreeNode {
-	k1 := node.Left
+	var nodeLeftHeight int = 0
+	var nodeRightHeight int = 0
+	var k1 *TreeNode = node.Left
 	node.Left = k1.Right
-	k1.Right = node;
-	node.Height = Max(node.Left.Height, node.Right.Height) + 1
+	k1.Right = node
+	if k1.Right != nil {
+		nodeRightHeight = k1.Right.Height
+	}
+	if k1.Left != nil {
+		nodeLeftHeight = k1.Left.Height
+	}
+	node.Height = 1 + Max(nodeLeftHeight, nodeRightHeight)
 	k1.Height = Max(k1.Left.Height, node.Height) + 1
 
 	return k1
@@ -172,7 +170,7 @@ func Max(a, b int) int {
 前序遍历
 
  */
-func (_this *TreeNode) PrevTraverse()  {
+func (_this *TreeNode) PrevTraverse() {
 	fmt.Printf("%d\t", _this.Data.(int))
 	if _this.Left != nil {
 		ShowNode(_this.Left)
@@ -186,7 +184,7 @@ func (_this *TreeNode) PrevTraverse()  {
 中序遍历
 
  */
-func (_this *TreeNode) MiddleTraverse()  {
+func (_this *TreeNode) MiddleTraverse() {
 	if _this.Left != nil {
 		ShowNode(_this.Left)
 	}
@@ -200,7 +198,7 @@ func (_this *TreeNode) MiddleTraverse()  {
 后序遍历
 
  */
-func (_this *TreeNode) AfterTraverse()  {
+func (_this *TreeNode) AfterTraverse() {
 	if _this.Left != nil {
 		ShowNode(_this.Left)
 	}
@@ -209,7 +207,6 @@ func (_this *TreeNode) AfterTraverse()  {
 	}
 	fmt.Printf("%d\t", _this.Data.(int))
 }
-
 
 // todo
 func (_this *TreeNode) ToString() {

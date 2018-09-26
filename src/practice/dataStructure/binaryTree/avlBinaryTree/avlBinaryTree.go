@@ -125,11 +125,19 @@ func LLRotation(node *TreeNode) *TreeNode {
 
 //4.2右右旋转
 func RRRotation(node *TreeNode) *TreeNode {
+	var nodeLeftHeight int = 0
+	var nodeRightHeight int = 0
 	k1 := node
 	var k2 *TreeNode = k1.Right
 	k1.Right = k2.Left
 	k2.Left = k1
-	k1.Height = Max(k1.Left.Height, k1.Right.Height) + 1
+	if k1.Right != nil {
+		nodeRightHeight = k1.Right.Height
+	}
+	if k1.Left != nil {
+		nodeLeftHeight = k1.Left.Height
+	}
+	k1.Height = Max(nodeLeftHeight, nodeRightHeight) + 1
 	k2.Height = Max(k2.Right.Height, k1.Height) + 1
 
 	return k2

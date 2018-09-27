@@ -6,6 +6,7 @@ import "fmt"
 平衡二叉树的实现
 	介绍+实现  https://www.cnblogs.com/skywang12345/p/3576969.html
 	一共有4种旋转操作
+	更加详细的8种旋转操作
 
 实现步骤：
 	1.方法1：创建树				100%
@@ -18,7 +19,10 @@ import "fmt"
 
 注意事项：
 	每新增一个节点a，则a的height是0，因为插入操作后，a会成为叶子节点
+	关于高度，有的地方规定"空二叉树的高度是-1"，而本文采用维基百科上的定义：树的高度为最大层次。即空的二叉树的高度是0，非空树的高度等于它的最大层次(根的层次为1，根的子节点为第2层，依次类推)
 
+
+数据结构和算法目录：https://www.cnblogs.com/skywang12345/p/3603935.html
  */
 
 type TreeNode struct {
@@ -65,14 +69,24 @@ func InsertNode(val int, tree *TreeNode) *TreeNode {
 		tree.Right = InsertNode(val, tree.Right)
 		//检查是否失衡
 		if Height(tree.Right)-Height(tree.Left) >= 2 {
-			originRoot = RRRotation(originRoot)
-			fmt.Println("发生了右右旋转")
+			if val < tree.Right.Data.(int) {
+				originRoot = RRRotation(originRoot)
+			} else {
+				originRoot = RLRotation(originRoot)
+			}
+			fmt.Println("发生了右右、右左旋转")
 		}
 	} else if (val < tree.Data.(int)) {
 		tree.Left = InsertNode(val, tree.Left)
 		if Height(tree.Left)-Height(tree.Right) >= 2 {
-			tree = LLRotation(originRoot)
-			fmt.Println("发生了左左旋转")
+			if val > tree.Left.Data.(int) {
+				originRoot = LRRotation(originRoot)
+			} else {
+				//debug中。。。。
+				tree.Height = Max(Height(tree.Left), Height(tree.Right)) + 1
+				originRoot = LLRotation(originRoot)
+			}
+			fmt.Println("发生了左左、左右旋转")
 		}
 	} else {
 		fmt.Println("失败，不允许添加相同值的节点！")

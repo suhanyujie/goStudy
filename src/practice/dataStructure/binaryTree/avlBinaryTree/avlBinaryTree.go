@@ -74,7 +74,7 @@ func InsertNode(val int, tree *TreeNode) *TreeNode {
 			} else {
 				originRoot = RLRotation(originRoot)
 			}
-			fmt.Println("发生了右右、右左旋转")
+			fmt.Println("发生了右右（或右左）旋转")
 		}
 	} else if (val < tree.Data.(int)) {
 		tree.Left = InsertNode(val, tree.Left)
@@ -83,15 +83,15 @@ func InsertNode(val int, tree *TreeNode) *TreeNode {
 				originRoot = LRRotation(originRoot)
 			} else {
 				//debug中。。。。
-				tree.Height = Max(Height(tree.Left), Height(tree.Right)) + 1
 				originRoot = LLRotation(originRoot)
 			}
-			fmt.Println("发生了左左、左右旋转")
+			fmt.Println("发生了左左（或左右）旋转")
 		}
 	} else {
 		fmt.Println("失败，不允许添加相同值的节点！")
 	}
-	tree.Height = Max(Height(tree.Left), Height(tree.Right)) + 1
+	originRoot.Height = Max(Height(originRoot.Left), Height(originRoot.Right)) + 1
+	tree = originRoot
 
 	return tree
 }
@@ -118,7 +118,10 @@ func MaxOfI(data1, data2 interface{}) interface{} {
 	}
 }
 
-//4.1 左左旋
+/**
+4.1 左左旋 已左测节点为轴心旋转
+	左左旋
+ */
 func LLRotation(node *TreeNode) *TreeNode {
 	var nodeLeftHeight int = 0
 	var nodeRightHeight int = 0
@@ -131,8 +134,15 @@ func LLRotation(node *TreeNode) *TreeNode {
 	if k1.Left != nil {
 		nodeLeftHeight = k1.Left.Height
 	}
+	k1.Height = 1 + Max(nodeLeftHeight, nodeRightHeight)
+	nodeLeftHeight = 0;nodeRightHeight = 0
+	if node.Right != nil {
+		nodeRightHeight = node.Right.Height
+	}
+	if node.Left != nil {
+		nodeLeftHeight = node.Left.Height
+	}
 	node.Height = 1 + Max(nodeLeftHeight, nodeRightHeight)
-	k1.Height = Max(k1.Left.Height, node.Height) + 1
 
 	return k1
 }
@@ -235,6 +245,7 @@ func (_this *TreeNode) ToString() {
 	ShowNode(_this)
 }
 
+// todo 后序遍历
 func ShowNode(node *TreeNode) {
 	if node.Left != nil {
 		ShowNode(node.Left)

@@ -135,7 +135,8 @@ func LLRotation(node *TreeNode) *TreeNode {
 		nodeLeftHeight = k1.Left.Height
 	}
 	k1.Height = 1 + Max(nodeLeftHeight, nodeRightHeight)
-	nodeLeftHeight = 0;nodeRightHeight = 0
+	nodeLeftHeight = 0;
+	nodeRightHeight = 0
 	if node.Right != nil {
 		nodeRightHeight = node.Right.Height
 	}
@@ -162,7 +163,15 @@ func RRRotation(node *TreeNode) *TreeNode {
 		nodeLeftHeight = k1.Left.Height
 	}
 	k1.Height = Max(nodeLeftHeight, nodeRightHeight) + 1
-	k2.Height = Max(k2.Right.Height, k1.Height) + 1
+	nodeLeftHeight = 0;
+	nodeRightHeight = 0
+	if k2.Right != nil {
+		nodeRightHeight = k2.Right.Height
+	}
+	if k2.Left != nil {
+		nodeLeftHeight = k2.Left.Height
+	}
+	k2.Height = Max(nodeLeftHeight, nodeRightHeight) + 1
 
 	return k2
 }

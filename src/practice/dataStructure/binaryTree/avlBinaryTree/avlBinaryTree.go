@@ -71,29 +71,29 @@ func InsertNode(val int, tree *TreeNode) *TreeNode {
 		if Height(tree.Right)-Height(tree.Left) >= 2 {
 			if val < tree.Right.Data.(int) {
 				originRoot = RRRotation(originRoot)
+				fmt.Println("发生了右右旋转")
 			} else {
 				originRoot = RLRotation(originRoot)
+				fmt.Println("发生了右左旋转")
 			}
-			fmt.Println("发生了右右（或右左）旋转")
 		}
 	} else if (val < tree.Data.(int)) {
 		tree.Left = InsertNode(val, tree.Left)
 		if Height(tree.Left)-Height(tree.Right) >= 2 {
 			if val > tree.Left.Data.(int) {
 				originRoot = LRRotation(originRoot)
+				fmt.Println("发生了左右旋转")
 			} else {
-				//debug中。。。。
 				originRoot = LLRotation(originRoot)
+				fmt.Println("发生了左左旋转")
 			}
-			fmt.Println("发生了左左（或左右）旋转")
 		}
 	} else {
 		fmt.Println("失败，不允许添加相同值的节点！")
 	}
 	originRoot.Height = Max(Height(originRoot.Left), Height(originRoot.Right)) + 1
-	tree = originRoot
 
-	return tree
+	return originRoot
 }
 
 //2.获取树的高度
@@ -249,7 +249,7 @@ func (_this *TreeNode) AfterTraverse() {
 	fmt.Printf("%d\t", _this.Data.(int))
 }
 
-// todo
+// todo 后续遍历打印节点值
 func (_this *TreeNode) ToString() {
 	ShowNode(_this)
 }

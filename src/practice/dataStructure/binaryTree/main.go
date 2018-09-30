@@ -12,14 +12,22 @@ func main() {
 	TestAvl()
 }
 
+/**
+在加入节点5的时候 平衡遭到破坏 并且没有通过旋转得到解决
+ */
 func TestAvl() {
-	tree := avlBinaryTree.CreateAvlTree(25, nil, nil)
-	tree = avlBinaryTree.InsertNode(16,tree)
-	tree = avlBinaryTree.InsertNode(12,tree)
+	var numArr []int = []int{1,2,3,4,5,6,7,8}
+	var tree *avlBinaryTree.TreeNode
+	tree = avlBinaryTree.CreateAvlTree(25, nil, nil)
+	for _,data := range numArr{
+		tree = avlBinaryTree.InsertNode(data,tree)
+		tree.PrevTraverse()
+	}
+
 	//avlBinaryTree.InsertNode(36,tree)
 	//avlBinaryTree.InsertNode(27,tree)
 
-	tree.ToString()
+	//tree.ToString()
 }
 
 func TestBinaryTree() {

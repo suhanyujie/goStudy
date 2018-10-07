@@ -14,6 +14,8 @@ func main() {
 
 /**
 在加入节点5的时候 平衡遭到破坏 并且没有通过旋转得到解决
+
+
  */
 func TestAvl() {
 	var numArr []int = []int{1,2,3,4,5,6,7,8}
